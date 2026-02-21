@@ -43,6 +43,7 @@ export interface Translation {
     message: string;
     send: string;
     success: string;
+    whatsapp: string;
   };
   footer: {
     address: string;
@@ -88,7 +89,8 @@ export const translations: Record<Language, Translation> = {
       subject: 'Assunto',
       message: 'Mensagem',
       send: 'Enviar Mensagem',
-      success: 'Mensagem enviada com sucesso!'
+      success: 'Mensagem enviada com sucesso!',
+      whatsapp: 'Fale conosco no WhatsApp'
     },
     footer: {
       address: 'Rua Dr. José Alves Costa, 698, Centro, São João do Ivaí, PR',
@@ -132,7 +134,8 @@ export const translations: Record<Language, Translation> = {
       subject: 'Subject',
       message: 'Message',
       send: 'Send Message',
-      success: 'Message sent successfully!'
+      success: 'Message sent successfully!',
+      whatsapp: 'Chat with us on WhatsApp'
     },
     footer: {
       address: 'Rua Dr. José Alves Costa, 698, Centro, São João do Ivaí, PR',
@@ -176,7 +179,8 @@ export const translations: Record<Language, Translation> = {
       subject: 'Asunto',
       message: 'Mensaje',
       send: 'Enviar Mensaje',
-      success: '¡Mensaje enviado con éxito!'
+      success: '¡Mensaje enviado con éxito!',
+      whatsapp: 'Chatea con nosotros en WhatsApp'
     },
     footer: {
       address: 'Rua Dr. José Alves Costa, 698, Centro, São João do Ivaí, PR',
@@ -220,7 +224,8 @@ export const translations: Record<Language, Translation> = {
       subject: '主题',
       message: '信息',
       send: '发送信息',
-      success: '信息发送成功！'
+      success: '信息发送成功！',
+      whatsapp: '在 WhatsApp 上与我们聊天'
     },
     footer: {
       address: 'Rua Dr. José Alves Costa, 698, Centro, São João do Ivaí, PR',
