@@ -179,9 +179,12 @@ const Hero = ({ lang }: { lang: Language }) => {
   const [bgImage, setBgImage] = useState<string>(DEFAULT_HERO);
 
   useEffect(() => {
-    generateTradingImage("A vast soybean plantation at sunset with a modern cargo ship in the background, representing global agricultural export, cinematic lighting, 8k").then(img => {
-      if (img) setBgImage(img);
-    });
+    const timer = setTimeout(() => {
+      generateTradingImage("A vast soybean plantation at sunset with a modern cargo ship in the background, representing global agricultural export, cinematic lighting, 8k").then(img => {
+        if (img) setBgImage(img);
+      });
+    }, 500); // Small initial delay
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -246,7 +249,7 @@ const About = ({ lang }: { lang: Language }) => {
       generateTradingImage("A modern corporate office building with glass windows, reflecting a clear blue sky, professional and solid trading company headquarters").then(img => {
         if (img) setAboutImage(img);
       });
-    }, 1000);
+    }, 2500); // Increased delay
     return () => clearTimeout(timer);
   }, []);
 
@@ -334,7 +337,7 @@ const Products = ({ lang }: { lang: Language }) => {
     const prompts = {
       coffee: "High quality roasted coffee beans and green coffee beans in burlap sacks, professional lighting",
       corn: "Golden corn kernels in a large storage facility, agricultural commodity photography",
-      soy: "Soybean seeds in a pile, macro photography, high quality agricultural product",
+      soy: "Close up of high quality soybeans in a wooden bowl or sack, natural lighting, agricultural commodity",
       grains: "Assorted grains like wheat, barley and rye in glass jars or sacks, clean background"
     };
 
@@ -344,7 +347,7 @@ const Products = ({ lang }: { lang: Language }) => {
         generateTradingImage(prompt).then(img => {
           if (img) setImages(prev => ({ ...prev, [key]: img }));
         });
-      }, 2000 + (index * 1500));
+      }, 5000 + (index * 3000)); // Increased delays: 5s, 8s, 11s, 14s
     });
   }, []);
 
@@ -415,7 +418,7 @@ const Logistics = ({ lang }: { lang: Language }) => {
       generateTradingImage("A busy commercial port with many colorful containers and a large cargo ship, logistics and international trade concept, sunset").then(img => {
         if (img) setLogImage(img);
       });
-    }, 8000); // Wait for other images to finish
+    }, 20000); // Increased delay to 20s to wait for other images
     return () => clearTimeout(timer);
   }, []);
 
@@ -503,8 +506,17 @@ const Contact = ({ lang }: { lang: Language }) => {
   const t = translations[lang];
   const [status, setStatus] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const subject = formData.get('subject');
+    const message = formData.get('message');
+    
+    const mailtoLink = `mailto:comercial@esjtrade.com?subject=${encodeURIComponent(subject as string)}&body=${encodeURIComponent(`Nome: ${name}\nE-mail: ${email}\n\nMensagem:\n${message}`)}`;
+    window.location.href = mailtoLink;
+    
     setStatus(t.contact.success);
     setTimeout(() => setStatus(null), 5000);
   };
@@ -558,20 +570,20 @@ const Contact = ({ lang }: { lang: Language }) => {
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-xs font-bold uppercase tracking-widest opacity-50">{t.contact.name}</label>
-                  <input type="text" required className="w-full bg-black/5 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-navy transition-all" />
+                  <input name="name" type="text" required className="w-full bg-black/5 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-navy transition-all" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold uppercase tracking-widest opacity-50">{t.contact.email}</label>
-                  <input type="email" required className="w-full bg-black/5 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-navy transition-all" />
+                  <input name="email" type="email" required className="w-full bg-black/5 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-navy transition-all" />
                 </div>
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-bold uppercase tracking-widest opacity-50">{t.contact.subject}</label>
-                <input type="text" required className="w-full bg-black/5 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-navy transition-all" />
+                <input name="subject" type="text" required className="w-full bg-black/5 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-navy transition-all" />
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-bold uppercase tracking-widest opacity-50">{t.contact.message}</label>
-                <textarea rows={4} required className="w-full bg-black/5 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-navy transition-all resize-none" />
+                <textarea name="message" rows={4} required className="w-full bg-black/5 border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-navy transition-all resize-none" />
               </div>
               <button type="submit" className="btn-primary w-full py-4">
                 {t.contact.send}
