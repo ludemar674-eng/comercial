@@ -4,9 +4,12 @@ let aiInstance: GoogleGenAI | null = null;
 
 function getAI() {
   if (!aiInstance) {
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey || apiKey === "undefined") {
-      console.warn("GEMINI_API_KEY is not defined. Image generation will be disabled.");
+    // No Vite, usamos define para substituir process.env.GEMINI_API_KEY
+    // Mas é mais seguro checar se o valor foi realmente injetado
+    const apiKey = typeof process !== 'undefined' ? process.env.GEMINI_API_KEY : undefined;
+    
+    if (!apiKey || apiKey === "undefined" || apiKey === "") {
+      console.warn("GEMINI_API_KEY não encontrada. As imagens padrão (Unsplash) serão exibidas.");
       return null;
     }
     aiInstance = new GoogleGenAI({ apiKey });
