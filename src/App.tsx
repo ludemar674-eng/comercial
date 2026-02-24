@@ -175,7 +175,7 @@ const Navbar = ({ lang, setLang }: { lang: Language, setLang: (l: Language) => v
 
 const Hero = ({ lang }: { lang: Language }) => {
   const t = translations[lang];
-  const DEFAULT_HERO = "https://images.unsplash.com/photo-1586771107445-d3ca888129ff?auto=format&fit=crop&q=80&w=1920";
+  const DEFAULT_HERO = "https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?auto=format&fit=crop&q=80&w=1920"; // Campo de soja vasto e ensolarado
   const [bgImage, setBgImage] = useState<string>(DEFAULT_HERO);
 
   useEffect(() => {
@@ -240,7 +240,7 @@ const Hero = ({ lang }: { lang: Language }) => {
 
 const About = ({ lang }: { lang: Language }) => {
   const t = translations[lang];
-  const DEFAULT_ABOUT = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1000";
+  const DEFAULT_ABOUT = "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1000"; // Escritório moderno e luxuoso
   const [aboutImage, setAboutImage] = useState<string>(DEFAULT_ABOUT);
 
   useEffect(() => {
@@ -328,8 +328,8 @@ const Products = ({ lang }: { lang: Language }) => {
   const DEFAULT_IMAGES: Record<string, string> = {
     coffee: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&q=80&w=600",
     corn: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&q=80&w=600",
-    soy: "https://images.unsplash.com/photo-1594756202469-9ff9799b2e42?auto=format&fit=crop&q=80&w=600",
-    grains: "https://images.unsplash.com/photo-1501265976582-c1e1b0bbaf63?auto=format&fit=crop&q=80&w=600"
+    soy: "https://images.unsplash.com/photo-1594756202469-9ff9799b2e42?auto=format&fit=crop&q=80&w=600", // Grãos de soja secos e limpos
+    grains: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&q=80&w=600" // Grãos de trigo e cereais
   };
   const [images, setImages] = useState<Record<string, string>>(DEFAULT_IMAGES);
 
@@ -337,8 +337,8 @@ const Products = ({ lang }: { lang: Language }) => {
     const prompts = {
       coffee: "High quality roasted coffee beans and green coffee beans in burlap sacks, professional lighting",
       corn: "Golden corn kernels in a large storage facility, agricultural commodity photography",
-      soy: "Close up of high quality soybeans in a wooden bowl or sack, natural lighting, agricultural commodity",
-      grains: "Assorted grains like wheat, barley and rye in glass jars or sacks, clean background"
+      soy: "Close up of high quality dried soybeans, clean and ready for export, professional agricultural commodity photography",
+      grains: "High quality wheat grains and assorted cereals, agricultural commodity trading, clean background"
     };
 
     // Stagger requests to respect rate limits
