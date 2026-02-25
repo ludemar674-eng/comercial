@@ -18,7 +18,6 @@ import {
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { translations, type Language } from './constants';
-import { generateTradingImage } from './services/geminiService';
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -175,35 +174,17 @@ const Navbar = ({ lang, setLang }: { lang: Language, setLang: (l: Language) => v
 
 const Hero = ({ lang }: { lang: Language }) => {
   const t = translations[lang];
-  const DEFAULT_HERO = "https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?auto=format&fit=crop&q=80&w=1920"; // Campo de soja vasto e ensolarado
-  const [bgImage, setBgImage] = useState<string>(DEFAULT_HERO);
-
-  useEffect(() => {
-    // Only generate hero image if API key is present to save quota and avoid errors
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey || apiKey === 'undefined') return;
-
-    const timer = setTimeout(() => {
-      generateTradingImage("A modern commercial port at sunset with cargo ships and containers, cinematic lighting, high quality, professional photography").then(img => {
-        if (img) setBgImage(img);
-      });
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
+  const HERO_IMAGE = "https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?auto=format&fit=crop&q=80&w=1920"; // Campo de soja vasto e ensolarado
 
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
-        {bgImage ? (
-          <img 
-            src={bgImage} 
-            alt="Hero Background" 
-            className="w-full h-full object-cover scale-105 animate-slow-zoom"
-            referrerPolicy="no-referrer"
-          />
-        ) : (
-          <div className="w-full h-full bg-navy animate-pulse" />
-        )}
+        <img 
+          src={HERO_IMAGE} 
+          alt="Hero Background" 
+          className="w-full h-full object-cover scale-105 animate-slow-zoom"
+          referrerPolicy="no-referrer"
+        />
         <div className="absolute inset-0 bg-gradient-to-r from-navy/80 to-navy/40" />
       </div>
 
@@ -244,10 +225,8 @@ const Hero = ({ lang }: { lang: Language }) => {
 
 const About = ({ lang }: { lang: Language }) => {
   const t = translations[lang];
-  const DEFAULT_ABOUT = "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1000"; // Escritório moderno e luxuoso
-  const [aboutImage, setAboutImage] = useState<string>(DEFAULT_ABOUT);
+  const ABOUT_IMAGE = "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1000"; // Escritório moderno e luxuoso
 
-  // Using high quality static images by default to avoid rate limits
   return (
     <section id="about" className="section-padding bg-white">
       <div className="max-w-7xl mx-auto">
@@ -292,18 +271,12 @@ const About = ({ lang }: { lang: Language }) => {
             className="relative"
           >
             <div className="aspect-square rounded-3xl overflow-hidden shadow-2xl bg-navy/5">
-              {aboutImage ? (
-                <img 
-                  src={aboutImage} 
-                  alt="Office" 
-                  className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
-                />
-              ) : (
-                <div className="w-full h-full animate-pulse flex items-center justify-center text-navy/20">
-                  <Globe className="w-12 h-12" />
-                </div>
-              )}
+              <img 
+                src={ABOUT_IMAGE} 
+                alt="Office" 
+                className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+              />
             </div>
             <div className="absolute -bottom-8 -left-8 bg-gold p-8 rounded-3xl shadow-xl hidden md:block">
               <div className="text-white">
@@ -320,15 +293,13 @@ const About = ({ lang }: { lang: Language }) => {
 
 const Products = ({ lang }: { lang: Language }) => {
   const t = translations[lang];
-  const DEFAULT_IMAGES: Record<string, string> = {
+  const PRODUCT_IMAGES: Record<string, string> = {
     coffee: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&q=80&w=600",
     corn: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&q=80&w=600",
-    soy: "https://images.unsplash.com/photo-1594756202469-9ff9799b2e42?auto=format&fit=crop&q=80&w=600", // Grãos de soja secos e limpos
+    soy: "https://images.unsplash.com/photo-1553232431-c8a4d7a78d8c?auto=format&fit=crop&q=80&w=600", // Soja em um container
     grains: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&q=80&w=600" // Grãos de trigo e cereais
   };
-  const [images, setImages] = useState<Record<string, string>>(DEFAULT_IMAGES);
 
-  // Using high quality static images by default to avoid rate limits
   const productList = [
     { id: 'coffee', title: t.products.coffee, desc: t.products.coffeeDesc, icon: <Coffee /> },
     { id: 'corn', title: t.products.corn, desc: t.products.cornDesc, icon: <Wheat /> },
@@ -349,22 +320,17 @@ const Products = ({ lang }: { lang: Language }) => {
             <motion.div
               key={p.id}
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
               className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500"
             >
               <div className="h-48 overflow-hidden relative">
-                {images[p.id] ? (
-                  <img 
-                    src={images[p.id]} 
-                    alt={p.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    referrerPolicy="no-referrer"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-navy/10 animate-pulse" />
-                )}
+                <img 
+                  src={PRODUCT_IMAGES[p.id]} 
+                  alt={p.title} 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  referrerPolicy="no-referrer"
+                />
                 <div className="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-navy">
                   {p.icon}
                 </div>
@@ -388,10 +354,8 @@ const Products = ({ lang }: { lang: Language }) => {
 
 const Logistics = ({ lang }: { lang: Language }) => {
   const t = translations[lang];
-  const DEFAULT_LOG = "https://images.unsplash.com/photo-1494412519320-aa613dfb7738?auto=format&fit=crop&q=80&w=1000";
-  const [logImage, setLogImage] = useState<string>(DEFAULT_LOG);
+  const LOG_IMAGE = "https://images.unsplash.com/photo-1494412519320-aa613dfb7738?auto=format&fit=crop&q=80&w=1000";
 
-  // Using high quality static images by default to avoid rate limits
   return (
     <section id="logistics" className="section-padding bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
@@ -424,11 +388,7 @@ const Logistics = ({ lang }: { lang: Language }) => {
                   </div>
                 </div>
                 <div className="h-64 rounded-3xl overflow-hidden shadow-lg">
-                  {logImage ? (
-                    <img src={logImage} alt="Logistics" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-                  ) : (
-                    <div className="w-full h-full bg-navy/10 animate-pulse" />
-                  )}
+                  <img src={LOG_IMAGE} alt="Logistics" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                 </div>
               </div>
             </div>
@@ -451,7 +411,12 @@ const Logistics = ({ lang }: { lang: Language }) => {
             </p>
             
             <ul className="space-y-4">
-              {t.logistics.features.map((item, i) => (
+              {[
+                "Operação nos principais portos brasileiros",
+                "Gestão completa de documentação aduaneira",
+                "Rastreamento de carga em tempo real",
+                "Parcerias com as maiores transportadoras globais"
+              ].map((item, i) => (
                 <li key={i} className="flex items-center gap-3 text-navy font-medium">
                   <div className="w-6 h-6 bg-gold/20 text-gold rounded-full flex items-center justify-center flex-shrink-0">
                     <CheckCircle className="w-4 h-4" />
