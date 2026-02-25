@@ -481,12 +481,7 @@ const Logistics = ({ lang }: { lang: Language }) => {
             </p>
             
             <ul className="space-y-4">
-              {[
-                "Operação nos principais portos brasileiros",
-                "Gestão completa de documentação aduaneira",
-                "Rastreamento de carga em tempo real",
-                "Parcerias com as maiores transportadoras globais"
-              ].map((item, i) => (
+              {t.logistics.features.map((item, i) => (
                 <li key={i} className="flex items-center gap-3 text-navy font-medium">
                   <div className="w-6 h-6 bg-gold/20 text-gold rounded-full flex items-center justify-center flex-shrink-0">
                     <CheckCircle className="w-4 h-4" />
