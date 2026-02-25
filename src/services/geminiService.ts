@@ -1,15 +1,14 @@
 import { GoogleGenAI } from "@google/genai";
 
-const apiKey = process.env.GEMINI_API_KEY || "";
-const ai = new GoogleGenAI({ apiKey });
+const apiKey = typeof process !== 'undefined' ? process.env.GEMINI_API_KEY : '';
 
 export async function generateTradingImage(prompt: string): Promise<string | null> {
-  try {
-    if (!apiKey) {
-      console.warn("GEMINI_API_KEY not found");
-      return null;
-    }
+  if (!apiKey || apiKey === 'undefined') {
+    return null;
+  }
 
+  try {
+    const ai = new GoogleGenAI({ apiKey });
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash-image',
       contents: {
@@ -28,8 +27,13 @@ export async function generateTradingImage(prompt: string): Promise<string | nul
       }
     }
     return null;
-  } catch (error) {
-    console.error("Error generating image:", error);
+  } catch (error: any) {
+    // Gracefully handle rate limits and other API errors
+    if (error?.message?.includes('429') || error?.message?.includes('quota')) {
+      console.warn("Gemini API quota exceeded, using fallback image.");
+    } else {
+      console.error("Error generating image:", error);
+    }
     return null;
   }
 }

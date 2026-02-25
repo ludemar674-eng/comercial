@@ -179,11 +179,15 @@ const Hero = ({ lang }: { lang: Language }) => {
   const [bgImage, setBgImage] = useState<string>(DEFAULT_HERO);
 
   useEffect(() => {
+    // Only generate hero image if API key is present to save quota and avoid errors
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey || apiKey === 'undefined') return;
+
     const timer = setTimeout(() => {
-      generateTradingImage("A vast soybean plantation at sunset with a modern cargo ship in the background, representing global agricultural export, cinematic lighting, 8k").then(img => {
+      generateTradingImage("A modern commercial port at sunset with cargo ships and containers, cinematic lighting, high quality, professional photography").then(img => {
         if (img) setBgImage(img);
       });
-    }, 500); // Small initial delay
+    }, 1000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -243,16 +247,7 @@ const About = ({ lang }: { lang: Language }) => {
   const DEFAULT_ABOUT = "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1000"; // Escritório moderno e luxuoso
   const [aboutImage, setAboutImage] = useState<string>(DEFAULT_ABOUT);
 
-  useEffect(() => {
-    // Small delay to avoid hitting rate limits simultaneously
-    const timer = setTimeout(() => {
-      generateTradingImage("A modern corporate office building with glass windows, reflecting a clear blue sky, professional and solid trading company headquarters").then(img => {
-        if (img) setAboutImage(img);
-      });
-    }, 2500); // Increased delay
-    return () => clearTimeout(timer);
-  }, []);
-
+  // Using high quality static images by default to avoid rate limits
   return (
     <section id="about" className="section-padding bg-white">
       <div className="max-w-7xl mx-auto">
@@ -333,24 +328,7 @@ const Products = ({ lang }: { lang: Language }) => {
   };
   const [images, setImages] = useState<Record<string, string>>(DEFAULT_IMAGES);
 
-  useEffect(() => {
-    const prompts = {
-      coffee: "High quality roasted coffee beans and green coffee beans in burlap sacks, professional lighting",
-      corn: "Golden corn kernels in a large storage facility, agricultural commodity photography",
-      soy: "Close up of high quality dried soybeans, clean and ready for export, professional agricultural commodity photography",
-      grains: "High quality wheat grains and assorted cereals, agricultural commodity trading, clean background"
-    };
-
-    // Stagger requests to respect rate limits
-    Object.entries(prompts).forEach(([key, prompt], index) => {
-      setTimeout(() => {
-        generateTradingImage(prompt).then(img => {
-          if (img) setImages(prev => ({ ...prev, [key]: img }));
-        });
-      }, 5000 + (index * 3000)); // Increased delays: 5s, 8s, 11s, 14s
-    });
-  }, []);
-
+  // Using high quality static images by default to avoid rate limits
   const productList = [
     { id: 'coffee', title: t.products.coffee, desc: t.products.coffeeDesc, icon: <Coffee /> },
     { id: 'corn', title: t.products.corn, desc: t.products.cornDesc, icon: <Wheat /> },
@@ -413,15 +391,7 @@ const Logistics = ({ lang }: { lang: Language }) => {
   const DEFAULT_LOG = "https://images.unsplash.com/photo-1494412519320-aa613dfb7738?auto=format&fit=crop&q=80&w=1000";
   const [logImage, setLogImage] = useState<string>(DEFAULT_LOG);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      generateTradingImage("A busy commercial port with many colorful containers and a large cargo ship, logistics and international trade concept, sunset").then(img => {
-        if (img) setLogImage(img);
-      });
-    }, 20000); // Increased delay to 20s to wait for other images
-    return () => clearTimeout(timer);
-  }, []);
-
+  // Using high quality static images by default to avoid rate limits
   return (
     <section id="logistics" className="section-padding bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
