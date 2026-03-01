@@ -294,9 +294,9 @@ const About = ({ lang }: { lang: Language }) => {
 const Products = ({ lang }: { lang: Language }) => {
   const t = translations[lang];
   const PRODUCT_IMAGES: Record<string, string> = {
-    coffee: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&q=80&w=600",
+    coffee: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=600", // Grãos de café
     corn: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&q=80&w=600",
-    soy: "https://images.unsplash.com/photo-1553232431-c8a4d7a78d8c?auto=format&fit=crop&q=80&w=600", // Soja em um container
+    soy: "https://lh3.googleusercontent.com/d/1jeNJYmGFJfBAgXR_-OLScukT-9kzsiWh", // Grãos de soja da referência do usuário
     grains: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&q=80&w=600" // Grãos de trigo e cereais
   };
 

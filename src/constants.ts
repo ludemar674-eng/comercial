@@ -34,6 +34,7 @@ export interface Translation {
   logistics: {
     title: string;
     content: string;
+    features: string[];
   };
   contact: {
     title: string;
@@ -63,7 +64,7 @@ export const translations: Record<Language, Translation> = {
       title: 'Sobre a Comercial Estrela São João',
       content: 'Com sede em São João do Ivaí, Paraná, a Comercial Estrela São João Ltda. é uma trading company dedicada a levar o melhor da produção agrícola brasileira para o mundo. Atuamos com transparência e eficiência em toda a cadeia de exportação.',
       mission: 'Missão',
-      missionText: 'Prover soluções logísticas e comerciais de excelência para o agronegócio, conectando produtores brasileiros a mercados internacionais.',
+      missionText: 'Prover soluções logísticas e comerciais de excellence para o agronegócio, conectando produtores brasileiros a mercados internacionais.',
       values: 'Valores',
       valuesText: 'Integridade, Compromisso, Sustentabilidade e Foco no Cliente.'
     },
@@ -80,7 +81,13 @@ export const translations: Record<Language, Translation> = {
     },
     logistics: {
       title: 'Logística e Exportação',
-      content: 'Nossa expertise logística garante que os produtos cheguem ao destino final com agilidade e segurança. Operamos nos principais portos do Brasil, cuidando de toda a documentação e trâmite aduaneiro.'
+      content: 'Nossa expertise logística garante que os produtos cheguem ao destino final com agilidade e segurança.',
+      features: [
+        'Operação nos principais portos brasileiros',
+        'Gestão completa de documentação aduaneira',
+        'Rastreamento de carga em tempo real',
+        'Parcerias com as maiores transportadoras globais'
+      ]
     },
     contact: {
       title: 'Fale Conosco',
@@ -125,7 +132,13 @@ export const translations: Record<Language, Translation> = {
     },
     logistics: {
       title: 'Logistics and Export',
-      content: 'Our logistical expertise ensures that products reach their final destination quickly and safely. We operate in the main ports of Brazil, taking care of all documentation and customs procedures.'
+      content: 'Our logistical expertise ensures that products reach their final destination quickly and safely.',
+      features: [
+        'Operation in major Brazilian ports',
+        'Complete customs documentation management',
+        'Real-time cargo tracking',
+        'Partnerships with major global carriers'
+      ]
     },
     contact: {
       title: 'Contact Us',
@@ -170,7 +183,13 @@ export const translations: Record<Language, Translation> = {
     },
     logistics: {
       title: 'Logística y Exportación',
-      content: 'Nuestra experiencia logística garantiza que los productos lleguen a su destino final con agilidad y seguridad. Operamos en los principales puertos de Brasil, encargándonos de toda la documentación y trámites aduaneros.'
+      content: 'Nuestra experiencia logística garantiza que los productos lleguen a su destino final con agilidad y seguridad.',
+      features: [
+        'Operación en los principales puertos brasileños',
+        'Gestión completa de documentación aduanera',
+        'Seguimiento de carga en tiempo real',
+        'Alianzas con los mayores transportistas globales'
+      ]
     },
     contact: {
       title: 'Contáctenos',
@@ -215,7 +234,13 @@ export const translations: Record<Language, Translation> = {
     },
     logistics: {
       title: '物流与出口',
-      content: '我们的物流专业知识确保产品快速安全地到达最终目的地。我们在巴西的主要港口运营，负责所有文件和海关手续。',
+      content: '我们的物流专业知识确保产品快速安全地到达最终目的地。',
+      features: [
+        '在巴西主要港口运营',
+        '完整的海关文件管理',
+        '实时货物追踪',
+        '与全球最大的运输公司建立合作伙伴关系'
+      ]
     },
     contact: {
       title: '联系我们',
